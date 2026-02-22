@@ -1,0 +1,131 @@
+body {
+  background: #121212;
+  color: #e0e0e0;
+  margin-top: 5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffffff;
+}
+
+.bg-steel {
+  background-color: #5f788a;
+}
+
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.content-section {
+  background: #1e1e1e;
+  padding: 10px 20px;
+  border: 1px solid #333333;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.article-title {
+  color: #ffffff;
+}
+
+a.article-title:hover {
+  color: #66afe9;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #333333;
+}
+
+.article-metadata a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+/* Additional Dark Mode Overrides for Bootstrap */
+.text-muted {
+  color: #aaaaaa !important;
+}
+
+.list-group-item,
+.list-group-item-light {
+  background-color: #1e1e1e;
+  border-color: #333333;
+  color: #e0e0e0;
+}
+
+.form-control {
+  background-color: #2a2a2a;
+  border-color: #444444;
+  color: #e0e0e0;
+}
+
+.form-control:focus {
+  background-color: #333333;
+  border-color: #5f788a;
+  color: #ffffff;
+}
+
+.modal-content {
+  background-color: #1e1e1e;
+  border-color: #444444;
+  color: #e0e0e0;
+}
+
+.modal-header,
+.modal-footer {
+  border-color: #333333;
+}
+
+.border-bottom,
+.border-top {
+  border-color: #333333 !important;
+}
+
+.nav-profile-img {
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
+}
