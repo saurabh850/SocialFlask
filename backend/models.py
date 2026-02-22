@@ -17,6 +17,14 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
 
+    @property
+    def image_url(self):
+        if self.image_file == 'default.jpg':
+            from flask import url_for
+            return url_for('static', filename='profile_pics/default.jpg')
+        from flask import current_app
+        return f"{current_app.config['SUPABASE_URL']}/storage/v1/object/public/profile_pics/{self.image_file}"
+
     def get_reset_token(self):
         s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
         return s.dumps({'user_id': self.id})

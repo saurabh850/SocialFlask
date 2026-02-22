@@ -1,21 +1,43 @@
 import os
 import secrets
+import io
 from PIL import Image
 from flask import url_for, current_app
 from flask_mail import Message
-from backend import mail
+from backend import mail, supabase
 
 def save_picture(form_picture):
-     random_hex = secrets.token_hex(8)
-     _, f_ext = os.path.splitext(form_picture.filename)
-     picture_fn = random_hex + f_ext
-     picture_path = os.path.join(current_app.root_path, 'static/profile_pics', picture_fn)
-     output_size = (125,125)
-     i = Image.open(form_picture)
-     i.thumbnail(output_size)
-     i.save(picture_path)
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    
+    img_byte_arr = io.BytesIO()
+    
+    format_mapping = {'.jpg': 'JPEG', '.jpeg': 'JPEG', '.png': 'PNG', '.gif': 'GIF'}
+    img_format = format_mapping.get(f_ext.lower(), 'PNG')
+    if i.mode in ("RGBA", "P") and img_format == 'JPEG':
+        i = i.convert("RGB")
+        
+    i.save(img_byte_arr, format=img_format)
+    img_bytes = img_byte_arr.getvalue()
+    
+    content_type = 'image/jpeg' if img_format == 'JPEG' else f'image/{img_format.lower()}'
+    
+    try:
+        supabase.storage.from_('profile_pics').upload(
+            file=img_bytes,
+            path=picture_fn,
+            file_options={"content-type": content_type}
+        )
+    except Exception as e:
+        print(f"Supabase upload failed: {e}")
+        return 'default.jpg'
 
-     return picture_fn
+    return picture_fn
 
 
 def send_reset_email(user):
