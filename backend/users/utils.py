@@ -27,11 +27,19 @@ def save_picture(form_picture):
     
     content_type = 'image/jpeg' if img_format == 'JPEG' else f'image/{img_format.lower()}'
     
-    supabase.storage.from_('profile_pics').upload(
-        file=img_bytes,
-        path=picture_fn,
-        file_options={"content-type": content_type}
-    )
+    import requests
+    
+    url = f"{current_app.config['SUPABASE_URL']}/storage/v1/object/profile_pics/{picture_fn}"
+    headers = {
+        "Authorization": f"Bearer {current_app.config['SUPABASE_KEY']}",
+        "Content-Type": content_type
+    }
+    
+    response = requests.post(url, headers=headers, data=img_bytes)
+    
+    if not response.ok:
+        print(f"Supabase upload failed: {response.text}")
+        return 'default.jpg'
 
     return picture_fn
 
