@@ -27,15 +27,11 @@ def save_picture(form_picture):
     
     content_type = 'image/jpeg' if img_format == 'JPEG' else f'image/{img_format.lower()}'
     
-    try:
-        supabase.storage.from_('profile_pics').upload(
-            file=img_bytes,
-            path=picture_fn,
-            file_options={"content-type": content_type}
-        )
-    except Exception as e:
-        print(f"Supabase upload failed: {e}")
-        return 'default.jpg'
+    supabase.storage.from_('profile_pics').upload(
+        file=img_bytes,
+        path=picture_fn,
+        file_options={"content-type": content_type}
+    )
 
     return picture_fn
 
